@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Energi Terbarukan</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/jquery.stellar.min.js') }}">
     <!-- Google Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,21 +24,26 @@
             font-family: 'Poppins', sans-serif;
             background-color: #f8f9fa;
         }
+
         .card {
             background-color: white;
-            border-radius: 1.5rem; /* Lebih bulat */
+            border-radius: 1.5rem;
+            /* Lebih bulat */
             padding: 2rem;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
         }
+
         .search-input {
             background-color: #f3f4f6;
             border-radius: 9999px;
             border: 2px solid transparent;
             padding: 0.75rem 1.5rem;
-            padding-left: 3rem; /* Ruang untuk ikon */
+            padding-left: 3rem;
+            /* Ruang untuk ikon */
             transition: all 0.3s ease;
         }
+
         .search-input:focus {
             outline: none;
             border-color: #3b82f6;
@@ -43,26 +51,26 @@
         }
     </style>
 </head>
+
 <body class="bg-gray-100">
 
     {{-- Blok Notifikasi Global --}}
     @if (session('success'))
-        <div 
-            x-data="{ show: true }" 
-            x-show="show" 
-            x-init="setTimeout(() => show = false, 5000)"
-            x-transition:enter="transition ease-out duration-300"
-            x-transition:enter-start="opacity-0 transform translate-y-4"
-            x-transition:enter-end="opacity-100 transform translate-y-0"
-            x-transition:leave="transition ease-in duration-300"
-            x-transition:leave-start="opacity-100 transform translate-y-0"
-            x-transition:leave-end="opacity-0 transform translate-y-4"
-            class="fixed top-5 right-5 z-50 bg-green-500 text-white py-3 px-6 rounded-lg shadow-lg flex items-center gap-4"
-            style="display: none;"
-        >
-            <i class="fa-solid fa-check-circle text-2xl"></i>
-            <span>{{ session('success') }}</span>
-        </div>
+    <div
+        x-data="{ show: true }"
+        x-show="show"
+        x-init="setTimeout(() => show = false, 5000)"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 transform translate-y-4"
+        x-transition:enter-end="opacity-100 transform translate-y-0"
+        x-transition:leave="transition ease-in duration-300"
+        x-transition:leave-start="opacity-100 transform translate-y-0"
+        x-transition:leave-end="opacity-0 transform translate-y-4"
+        class="fixed top-5 right-5 z-50 bg-green-500 text-white py-3 px-6 rounded-lg shadow-lg flex items-center gap-4"
+        style="display: none;">
+        <i class="fa-solid fa-check-circle text-2xl"></i>
+        <span>{{ session('success') }}</span>
+    </div>
     @endif
 
 
@@ -73,27 +81,27 @@
                 <img src="{{ asset('public/assets/img/logo_app.png') }}" alt="Logo App" class="h-40">
             </div>
             <nav class="flex flex-col gap-2">
-            @auth
+                @auth
                 @if(auth()->user()->is_admin)
-                    <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('admin.dashboard') ? 'bg-blue-100 text-blue-700 font-semibold' : 'text-gray-600 hover:bg-gray-100' }}">
-                        <i class="fa-solid fa-house w-5 text-center"></i>
-                        <span>Dashboard</span>
-                    </a>
-                    <a href="{{ route('admin.requests.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('admin.requests.*') ? 'bg-blue-100 text-blue-700 font-semibold' : 'text-gray-600 hover:bg-gray-100' }}">
-                        <i class="fa-solid fa-table-list w-5 text-center"></i>
-                        <span>Daftar Request</span>
-                    </a>
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('admin.dashboard') ? 'bg-blue-100 text-blue-700 font-semibold' : 'text-gray-600 hover:bg-gray-100' }}">
+                    <i class="fa-solid fa-house w-5 text-center"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="{{ route('admin.requests.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('admin.requests.*') ? 'bg-blue-100 text-blue-700 font-semibold' : 'text-gray-600 hover:bg-gray-100' }}">
+                    <i class="fa-solid fa-table-list w-5 text-center"></i>
+                    <span>Daftar Request</span>
+                </a>
                 @else
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('dashboard') ? 'bg-blue-100 text-blue-700 font-semibold' : 'text-gray-600 hover:bg-gray-100' }}">
-                        <i class="fa-solid fa-solar-panel w-5 text-center"></i>
-                        <span>Simulasi Energi</span>
-                    </a>
-                    <a href="{{ route('requests.history') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('requests.history') ? 'bg-blue-100 text-blue-700 font-semibold' : 'text-gray-600 hover:bg-gray-100' }}">
-                        <i class="fa-solid fa-list-check w-5 text-center"></i>
-                        <span>Status Pemasangan</span>
-                    </a>
+                <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('dashboard') ? 'bg-blue-100 text-blue-700 font-semibold' : 'text-gray-600 hover:bg-gray-100' }}">
+                    <i class="fa-solid fa-solar-panel w-5 text-center"></i>
+                    <span>Simulasi Energi</span>
+                </a>
+                <a href="{{ route('requests.history') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('requests.history') ? 'bg-blue-100 text-blue-700 font-semibold' : 'text-gray-600 hover:bg-gray-100' }}">
+                    <i class="fa-solid fa-list-check w-5 text-center"></i>
+                    <span>Status Pemasangan</span>
+                </a>
                 @endif
-            @endauth
+                @endauth
             </nav>
             <div class="mt-auto">
                 <a href="https://itpln.ac.id" target="_blank" class="text-xs text-gray-400 hover:text-blue-500">
@@ -107,11 +115,11 @@
             <!-- Header -->
             <header class="bg-white p-4 flex justify-between items-center border-b">
                 <div class="relative w-2/3 md:w-1/2">
-                    <form 
+                    <form
                         @if(Auth::check() && Auth::user()->is_admin)
-                            action="{{ route('admin.requests.index') }}"
+                        action="{{ route('admin.requests.index') }}"
                         @else
-                            action="{{ route('requests.history') }}"
+                        action="{{ route('requests.history') }}"
                         @endif
                         method="GET" class="flex items-center gap-2">
                         <div class="relative flex-grow">
@@ -122,13 +130,13 @@
                             {{-- ========================================================== --}}
                             {{-- PERUBAHAN UTAMA UNTUK HINT TANGGAL DITERAPKAN DI SINI --}}
                             {{-- ========================================================== --}}
-                            <input 
-                                type="text" 
-                                placeholder="Cari tanggal..." 
-                                name="search_date" 
-                                value="{{ request('search_date') }}" 
-                                onfocus="(this.type='date')" 
-                                onblur="if(!this.value) this.type='text'" 
+                            <input
+                                type="text"
+                                placeholder="Cari tanggal..."
+                                name="search_date"
+                                value="{{ request('search_date') }}"
+                                onfocus="(this.type='date')"
+                                onblur="if(!this.value) this.type='text'"
                                 class="w-full bg-gray-100 border-gray-200 rounded-lg py-2 px-3 text-sm">
                         </div>
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg px-4 py-2 text-sm">Cari</button>
@@ -173,4 +181,5 @@
     <!-- Script Section -->
     @stack('scripts')
 </body>
+
 </html>
