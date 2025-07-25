@@ -1,14 +1,34 @@
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
+// vite.config.js
+import { defineConfig } from 'vite'
+import laravel from 'laravel-vite-plugin'
+import tailwindcss from 'tailwindcss'
 
 export default defineConfig({
-    plugins: [
-        laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
-            refresh: true,
-        }),
-    ],
-    build: {
-        outDir: 'public/build', // Ini akan membuat folder 'build' di dalam 'public'
+  plugins: [
+    laravel({
+      input: [
+        'resources/css/app.css',
+        'resources/js/app.js'
+      ],
+      refresh: true,
+    }),
+  ],
+  css: {
+    postcss: {
+      plugins: [
+        tailwindcss(),
+      ],
+    },
+  },
+  build: {
+    manifest: true,
+    outDir: 'public/build',
+    rollupOptions: {
+      output: {
+        entryFileNames: `assets/[name].js`,
+        chunkFileNames: `assets/[name].js`,
+        assetFileNames: `assets/[name].[ext]`
+      }
     }
-});
+  }
+})
