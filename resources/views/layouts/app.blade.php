@@ -15,7 +15,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
     <!-- Aset Bawaan Laravel Breeze (Penting untuk Dropdown) -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!--@vite(['resources/css/app.css', 'resources/js/app.js'])-->
+    <link rel="stylesheet" href="{{ asset('public/build/assets/app.css') }}">
+    <script src="{{ asset('public/build/assets/app2.js') }}" defer></script>
 
     <style>
         body {
