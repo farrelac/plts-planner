@@ -1,7 +1,5 @@
-// vite.config.js
-import { defineConfig } from 'vite'
-import laravel from 'laravel-vite-plugin'
-import tailwindcss from 'tailwindcss'
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
   plugins: [
@@ -13,22 +11,17 @@ export default defineConfig({
       refresh: true,
     }),
   ],
-  css: {
-    postcss: {
-      plugins: [
-        tailwindcss(),
-      ],
-    },
-  },
   build: {
     manifest: true,
     outDir: 'public/build',
+    assetsDir: 'assets',
+    emptyOutDir: true, // Pastikan folder build kosong sebelum rebuild
     rollupOptions: {
       output: {
-        entryFileNames: `assets/[name].js`,
-        chunkFileNames: `assets/[name].js`,
-        assetFileNames: `assets/[name].[ext]`
+        entryFileNames: `assets/[name]-[hash].js`,
+        chunkFileNames: `assets/[name]-[hash].js`,
+        assetFileNames: `assets/[name]-[hash][extname]`
       }
     }
   }
-})
+});
