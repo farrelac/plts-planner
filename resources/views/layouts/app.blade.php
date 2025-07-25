@@ -70,7 +70,7 @@
         <!-- Sidebar -->
         <aside class="w-64 bg-white p-6 flex flex-col shadow-lg">
             <div class="flex items-center gap-3 mb-2">
-                <img src="{{ asset('assets/img/logo_app.png') }}" alt="Logo App" class="h-40">
+                <img src="{{ asset('public/assets/img/logo_app.png') }}" alt="Logo App" class="h-40">
             </div>
             <nav class="flex flex-col gap-2">
             @auth
